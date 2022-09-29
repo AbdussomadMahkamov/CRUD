@@ -44,58 +44,99 @@ public class Base {
         System.out.println("Ma'lumot o'chirildi");
     }
 
-    public void Tahrirlash(int id1) throws ClassNotFoundException, SQLException {
+    public void Tahrirlash(int id1 ,Hodim hodim1) throws ClassNotFoundException, SQLException {
+//        int hisob=0;
         Class.forName("org.postgresql.Driver");
         Connection connection= DriverManager.getConnection(url,user_name,password);
         Statement statement=connection.createStatement();
         Statement statement1=connection.createStatement();
-        String query="SELECT * FROM hodimlar";
-        ResultSet resultSet=statement.executeQuery(query);
-        Scanner cin=new Scanner(System.in);
-        while (resultSet.next()){
-            int Id= resultSet.getInt(1);
-            String ism=resultSet.getString(2), ism1="";
-            String familya=resultSet.getString(3), familya1="";
-            String manzil=resultSet.getString(4), manzil1="";
-            String e_pochta=resultSet.getString(5), e_pochta1="";
-            if (id1==Id){
-                System.out.println("Ismi: "+ism);
-                ism1 = cin.nextLine();
-                System.out.println("Familyasi: "+familya);
-                familya1 = cin.nextLine();
-                System.out.println("Manzili: "+manzil);
-                manzil1 = cin.nextLine();
-                System.out.println("E-pochta: "+e_pochta);
-                e_pochta1 = cin.nextLine();
 
-                if (ism1.equals("") || ism1.equals(ism)){
-                    System.out.println("Ism o'zgarmadi");
-                }else {
-                    ism=ism1;
-                    System.out.println("Ism o'zgardi");
+        String query="SELECT COUNT(*) FROM hodimlar WHERE id="+id1;
+        ResultSet resultSet=statement.executeQuery(query);
+        if (resultSet.next()){
+            int count=resultSet.getInt(1);
+            if (count==1){
+                String query1="UPDATE hodimlar set ";
+                if (!hodim1.getIsm().equals("")){
+                    query1+="ism='"+hodim1.getIsm()+"', ";
                 }
-                if (familya1.equals("") || familya1.equals(familya)){
-                    System.out.println("Familya o'zgarmadi");
-                }else {
-                    familya=familya1;
-                    System.out.println("Familya o'zgardi");
+                if (!hodim1.getFamilya().equals("")){
+                    query1+="familya='"+hodim1.getFamilya()+"', ";
                 }
-                if (manzil1.equals("") || manzil1.equals(manzil)){
-                    System.out.println("Manzil o'zgarmadi");
-                }else {
-                    manzil=manzil1;
-                    System.out.println("Manzil o'zgardi");
+                if (!hodim1.getManzil().equals("")){
+                    query1+="manzil='"+hodim1.getManzil()+"', ";
                 }
-                if (e_pochta1.equals("") || e_pochta1.equals(e_pochta)){
-                    System.out.println("E-pochta o'zgarmadi");
-                }else {
-                    e_pochta=e_pochta1;
-                    System.out.println("E-pochta o'zgardi");
+                if (!hodim1.getE_pochta().equals("")){
+                    query1+="e_pochta='"+hodim1.getE_pochta()+"' ";
                 }
-                String Query="UPDATE hodimlar SET ism='"+ism+"', familya='"+familya+"', manzil='"+manzil+"', e_pochta='"+e_pochta+"'WHERE id="+id1;
-                statement1.execute(Query);
+                if (!query1.equals("UPDATE hodimlar set ")){
+                    if (query1.endsWith("', ")){
+                        query1=query1.substring(0,query1.length()-2);
+                    }
+                    query1+=" WHERE id="+id1;
+                    statement1.execute(query1);
+                    System.out.println("Tahrirlandi");
+                }else {
+                    System.out.println("O'zgartirish kiritilmadi");
+                }
+
+            }else {
+                System.out.println("Bunday id li hodim mavjud emas");
             }
         }
+
+        /*
+//        String query="SELECT * FROM hodimlar";
+//        ResultSet resultSet=statement.executeQuery(query);
+//        Scanner cin=new Scanner(System.in);
+//        while (resultSet.next()){
+//            int Id= resultSet.getInt(1);
+//            String ism=resultSet.getString(2), ism1="";
+//            String familya=resultSet.getString(3), familya1="";
+//            String manzil=resultSet.getString(4), manzil1="";
+//            String e_pochta=resultSet.getString(5), e_pochta1="";
+//            if (id1==Id){
+//                hisob++;
+//                System.out.println("Ismi: "+ism);
+//                ism1 = cin.nextLine();
+//                System.out.println("Familyasi: "+familya);
+//                familya1 = cin.nextLine();
+//                System.out.println("Manzili: "+manzil);
+//                manzil1 = cin.nextLine();
+//                System.out.println("E-pochta: "+e_pochta);
+//                e_pochta1 = cin.nextLine();
+//
+//                if (ism1.equals("") || ism1.equals(ism)){
+//                    System.out.println("Ism o'zgarmadi");
+//                }else {
+//                    ism=ism1;
+//                    System.out.println("Ism o'zgardi");
+//                }
+//                if (familya1.equals("") || familya1.equals(familya)){
+//                    System.out.println("Familya o'zgarmadi");
+//                }else {
+//                    familya=familya1;
+//                    System.out.println("Familya o'zgardi");
+//                }
+//                if (manzil1.equals("") || manzil1.equals(manzil)){
+//                    System.out.println("Manzil o'zgarmadi");
+//                }else {
+//                    manzil=manzil1;
+//                    System.out.println("Manzil o'zgardi");
+//                }
+//                if (e_pochta1.equals("") || e_pochta1.equals(e_pochta)){
+//                    System.out.println("E-pochta o'zgarmadi");
+//                }else {
+//                    e_pochta=e_pochta1;
+//                    System.out.println("E-pochta o'zgardi");
+//                }
+//                String Query="UPDATE hodimlar SET ism='"+ism+"', familya='"+familya+"', manzil='"+manzil+"', e_pochta='"+e_pochta+"'WHERE id="+id1;
+//                statement1.execute(Query);
+//            }
+//        }
+//        if (hisob==0){
+//            System.out.println("Bunday id li hodim bazada mavjud emas!!!");
+//        }*/
     }
 //    public String Oqish() throws ClassNotFoundException, SQLException {
 //        Class.forName("org.postgresql.Driver");

@@ -43,7 +43,20 @@ public class Main {
                     in=new Scanner(System.in);
                     System.out.print("id: ");
                     int id1= in.nextInt();
-                    base.Tahrirlash(id1);
+                    in=new Scanner(System.in);
+                    System.out.print("Ismi: ");
+                    String ism1= in.nextLine();
+                    in=new Scanner(System.in);
+                    System.out.print("Familya: ");
+                    String familya1= in.nextLine();
+                    in=new Scanner(System.in);
+                    System.out.print("Manzil: ");
+                    String manzil1= in.nextLine();
+                    in=new Scanner(System.in);
+                    System.out.print("E-Pochta: ");
+                    String e_pochta1= in.nextLine();
+                    Hodim hodim1=new Hodim(ism1, familya1, manzil1, e_pochta1);
+                    base.Tahrirlash(id1, hodim1);
                     break;
                 case 3:
 //                    Base base1=new Base();
