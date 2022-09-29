@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        //Bazaga hodim ma'lumotlarini yaratish, o'qish, yangilash va o'chiruvchi dastur
         Scanner in=new Scanner(System.in);
         int i=-1;
         Base base = new Base();
