@@ -36,7 +36,8 @@ public class Main {
                     System.out.print("E-Pochta: ");
                     String e_pochta= in.nextLine();
                     Hodim hodim=new Hodim(ism, familya, manzil, e_pochta);
-                    base.Yaratish(hodim);
+//                    base.Yaratish(hodim);
+                    base.Saqlash(hodim);
                     break;
                 case 2:
                     System.out.print("Tahrirlamoqchi bo'lgan xodimingizni id sini kiriting: ");

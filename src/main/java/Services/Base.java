@@ -138,6 +138,20 @@ public class Base {
 //            System.out.println("Bunday id li hodim bazada mavjud emas!!!");
 //        }*/
     }
+
+    public void Saqlash(Hodim hodim) throws ClassNotFoundException, SQLException {
+        Class.forName("org.postgresql.Driver");
+        Connection connection= DriverManager.getConnection(url,user_name,password);
+        String Query="INSERT INTO hodimlar(ism, familya, manzil, e_pochta) " +
+                "VALUES(?, ?, ?, ?)";
+        PreparedStatement statement=connection.prepareStatement(Query);
+        statement.setString(1, hodim.getIsm());
+        statement.setString(2, hodim.getFamilya());
+        statement.setString(3, hodim.getManzil());
+        statement.setString(4, hodim.getE_pochta());
+        statement.executeUpdate();
+        System.out.println("Hodim ma'lumotlari saqlndi!");
+    }
 //    public String Oqish() throws ClassNotFoundException, SQLException {
 //        Class.forName("org.postgresql.Driver");
 //        Connection connection= DriverManager.getConnection(url,user_name,password);
